@@ -1,0 +1,16 @@
+type Error = variant { NotFound : record { msg : text } };
+type Rental = record {
+  id : nat64;
+  rental_end_time : opt nat64;
+  rental_start_time : nat64;
+  ps_model : text;
+  customer_name : text;
+};
+type RentalPayload = record { ps_model : text; customer_name : text };
+type Result = variant { Ok : Rental; Err : Error };
+service : {
+  add_rental : (RentalPayload) -> (opt Rental);
+  delete_rental : (nat64) -> (Result);
+  get_rental : (nat64) -> (Result) query;
+  update_rental : (nat64, RentalPayload) -> (Result);
+}
